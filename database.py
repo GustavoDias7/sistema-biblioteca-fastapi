@@ -1,4 +1,8 @@
-import sqlite3
+from sqlalchemy import create_engine
 
-def conectar():
-    return sqlite3.connect("biblioteca.db")
+DATABASE_URL = "sqlite:///./biblioteca.db"
+
+engine = create_engine(
+    DATABASE_URL,
+    connect_args={"check_same_thread": False}
+)

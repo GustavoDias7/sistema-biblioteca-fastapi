@@ -1,9 +1,12 @@
 from fastapi import FastAPI, HTTPException
 import crud
-from models import Livro
+from schemas import Livro
+from models import Base
+from database import engine
 
 app = FastAPI()
 
+Base.metadata.create_all(bind=engine)
 
 @app.get("/livros", response_model=list[Livro])
 def listar_livros():
