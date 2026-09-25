@@ -3,4 +3,22 @@ services:
     build: .
     ports:
       - "8000:8000"
+    volumes:
+      - .:/app
+    networks:
+      - mynetwork
+    env_file:
+      - .env.dev
+    depends_on:
+      - db
     command: uvicorn main:app --reload --host 0.0.0.0 --port 8000
+  db:
+    image: postgres:14
+    networks:
+      - mynetwork
+    env_file:
+      - .env.dev
+
+networks:
+  mynetwork:
+    driver: bridge
