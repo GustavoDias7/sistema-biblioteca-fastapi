@@ -17,6 +17,7 @@ def adicionar_livro(livro: Livro):
     db.add(new_livro)
     db.commit()
     db.refresh(new_livro)
+    db.close()
 
     return new_livro
 
@@ -31,6 +32,7 @@ def excluir_livro(id):
 
     db.delete(livro)
     db.commit()
+    db.close()
     
     return True
 
@@ -39,6 +41,7 @@ def buscar_livro(id):
     db = Session(engine)
     stmt = select(LivroModel).where(LivroModel.id == id)
     livro = db.execute(stmt).scalar_one_or_none()
+    db.close()
 
     return livro
 
@@ -47,6 +50,7 @@ def listar_livros():
     db = Session(engine)
     stmt = select(LivroModel)
     livros = db.execute(stmt).scalars().all()
+    db.close()
 
     return livros
 
@@ -66,5 +70,6 @@ def atualizar_livro(id, livro_atualizado: Livro):
 
     db.commit()
     db.refresh(livro)
+    db.close()
 
     return livro
